@@ -15,8 +15,8 @@
   <script type="module" crossorigin src="../../../assets/text-morph-controller-BKh-Fvmg.js"></script>
   <script type="module" crossorigin src="../../../assets/glass-distortion-wXj8mFdJ.js"></script>
   <script type="module" crossorigin src="../../../assets/glass-settings--sIcktBX.js"></script>
-  <script type="module" crossorigin src="../../../assets/main-GoP_QNpd.js"></script>
-  <link rel="stylesheet" crossorigin href="../../../assets/main-B9Pbx8C1.css">
+  <script type="module" crossorigin src="../../../assets/main-CQRsjtou.js"></script>
+  <link rel="stylesheet" crossorigin href="../../../assets/main-BwSAVB1s.css">
 </head>
 <body class="blog-page">
 <a class="skip-link" href="#main">Skip to content</a>
@@ -31,7 +31,8 @@
 <p>Compare <strong>Chromatic aberration</strong> at zero and 0.4, then turn <strong>Rim softness</strong> to zero to see sharper colored edges. <strong>Border radius</strong> rounds the pane's corners; <strong>Z-axis radius</strong> widens its depth bevel. Corner radii are capped at half the pane's shorter side. <strong>Glass color</strong> changes the frost mixed into the backdrop.</p>
 <p>This lab uses the production <code>GlassRenderer</code> and GLSL functions over a small canvas of shapes and sampled text. A live HTML label sits above it. That controlled scene makes the shader easier to inspect without running the portfolio's DOM capture system.</p>
 <p>Drag the pane across the lettering, or focus it with Tab and use the arrow keys. Shift moves farther; Home restores its position. <strong>Reset demo</strong> restores this instance's material and position, without saving preferences or changing the portfolio.</p>
-<section class="glass-demo" data-glass-demo="material" aria-label="Glass material lab"><noscript><p>Enable JavaScript to use this interactive glass material lab. The article remains available below.</p></noscript></section>
+<p><strong>Enter fullscreen</strong> expands the lab inside this page; Escape brings you back. <strong>Copy lab link</strong> shares its standalone page. <strong>Show magnifier</strong> adds a translucent white rectangle: move it or resize its corner to inspect the selected region in the zoomed view beside the scene (below it on mobile).</p>
+<section class="glass-demo" id="lab-material" data-glass-demo="material" data-lab-href="../../labs/material/" aria-label="Glass material lab"><noscript><p>Enable JavaScript to use this interactive glass material lab. The article remains available below.</p></noscript></section>
 <p>If WebGL is unavailable, the lab labels its CSS fallback. That fallback provides frost, but cannot reproduce the GPU's mirrored reflections or color separation.</p>
 <h2 id="keep-the-image-and-the-interface-separate">Keep the image and the interface separate</h2>
 <p>Each surface has <strong>a sampled image behind it</strong> and <strong>live content above it</strong>. The shader distorts the image while HTML keeps text selectable and controls accessible.</p>
@@ -62,7 +63,7 @@ instance.pause();
 <h2 id="scene-layers-are-different-from-ribbon-layers">Scene layers are different from ribbon layers</h2>
 <p>The layer lab exposes four independent switches. Background lighting and sampled text build the source scene. The rear pane samples it; the front pane samples the result beneath it. Live HTML labels remain above the output.</p>
 <p>Disable <strong>Sampled text</strong>, restore it, then disable <strong>Rear glass pane</strong>. Notice how the front pane's backdrop changes while it stays enabled. Drag either pane independently, or use the first lab's keyboard controls. <strong>Border radius</strong> changes both panes' corners. The front pane always paints above the rear pane.</p>
-<section class="glass-demo" data-glass-demo="layers" aria-label="Layer composition lab"><noscript><p>Enable JavaScript to use this interactive layer composition lab. The article remains available below.</p></noscript></section>
+<section class="glass-demo" id="lab-layers" data-glass-demo="layers" data-lab-href="../../labs/layers/" aria-label="Layer composition lab"><noscript><p>Enable JavaScript to use this interactive layer composition lab. The article remains available below.</p></noscript></section>
 <p>Sampled canvas text stands in for cached foreground images here, so the lab demonstrates paint order without repeatedly capturing HTML or reproducing the portfolio's full hover system.</p>
 <p>On the portfolio, <code>compareBackdropLayers</code> orders page content, the fixed header, the draggable lens, and controls. DOM order breaks ties, and parents paint before nested glass. The clear navigation pill can therefore sample both its bar and labels.</p>
 <p>The <strong>three procedural ribbons</strong> have their own ordering: <code>src/shader.js</code> draws them back to front in WGSL. Their completed canvas becomes one foreground source for later lenses. The layer lab controls scene contributions, not individual ribbons.</p>
@@ -226,7 +227,7 @@ return vec2(2.0 * inside + reach, liquidEdgeMask(inside, band));
 <li>Capture foreground images when an overlay needs to see text, keeping the original HTML.</li>
 <li>Provide CSS fallback and cleanup for observers, GPU resources, and scheduled frames.</li>
 </ol>
-<p>The material lab isolates steps 2–4; the layer lab shows step 6 with a controlled scene. Fullscreen enlarges the same renderer.</p>
+<p>The material lab isolates steps 2–4; the layer lab shows step 6 with a controlled scene. Expansion reuses the same renderer, and the magnifier crops its completed image rather than running another GPU pass.</p>
 <h2 id="source-map-and-further-reading">Source map and further reading</h2>
 <p>These paths refer to the private source tree. The excerpts above explain the core behavior without requiring repository access.</p>
 <table>
@@ -279,7 +280,7 @@ return vec2(2.0 * inside + reach, liquidEdgeMask(inside, band));
 </tr>
 </tbody>
 </table>
-<p>For the underlying tools, see <a href="https://github.com/ybouane/liquidglass" rel="noopener noreferrer">liquidglass</a>, <a href="https://vgpu.sh/" rel="noopener noreferrer">VGPU</a>, MDN's <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter" rel="noopener noreferrer">backdrop-filter reference</a>, and <a href="https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API/Guide" rel="noopener noreferrer">Fullscreen API guide</a>.</p>
+<p>For the underlying tools, see <a href="https://github.com/ybouane/liquidglass" rel="noopener noreferrer">liquidglass</a>, <a href="https://vgpu.sh/" rel="noopener noreferrer">VGPU</a>, MDN's <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter" rel="noopener noreferrer">backdrop-filter reference</a>, and <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog" rel="noopener noreferrer">dialog element reference</a>.</p>
 <p>The <a href="../../../THIRD-PARTY-NOTICES.txt">third-party notices</a> include the original authors' credits and licenses for liquidglass and its bundled html-to-image code.</p>
 </div></div></article></main>
 <footer class="blog-footer"><p>Written by Felipe de Soto. Built as static pages.</p><a href="../../../">Back to the portfolio</a></footer>
