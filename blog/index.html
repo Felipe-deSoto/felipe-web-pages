@@ -3,20 +3,21 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#101b30"><meta name="description" content="Practical notes on WebGL, interface design, and building for the web by Felipe de Soto. Learn how my projects work through code and interactive demos.">
+<meta name="theme-color" content="#101b30"><meta name="description" content="Web development notes by Felipe de Soto: WebGL shaders, interface design, code examples, and interactive demos.">
 
 <link rel="canonical" href="https://felipedesoto.com/blog/">
-<meta property="og:title" content="Web development and rendering notes"><meta property="og:description" content="Practical notes on WebGL, interface design, and building for the web by Felipe de Soto. Learn how my projects work through code and interactive demos.">
+<meta property="og:title" content="Web development and rendering notes"><meta property="og:description" content="Web development notes by Felipe de Soto: WebGL shaders, interface design, code examples, and interactive demos.">
 <meta property="og:type" content="website"><meta property="og:url" content="https://felipedesoto.com/blog/"><meta property="og:site_name" content="Felipe de Soto"><meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://felipedesoto.com/blog-assets/liquid-glass-webgl.png"><meta property="og:image:alt" content="Liquid glass over coral and blue layers, from Felipe de Soto&#39;s WebGL tutorial"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
-<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Web development and rendering notes"><meta name="twitter:description" content="Practical notes on WebGL, interface design, and building for the web by Felipe de Soto. Learn how my projects work through code and interactive demos."><meta name="twitter:image" content="https://felipedesoto.com/blog-assets/liquid-glass-webgl.png"><meta name="twitter:image:alt" content="Liquid glass over coral and blue layers, from Felipe de Soto&#39;s WebGL tutorial">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Web development and rendering notes"><meta name="twitter:description" content="Web development notes by Felipe de Soto: WebGL shaders, interface design, code examples, and interactive demos."><meta name="twitter:image" content="https://felipedesoto.com/blog-assets/liquid-glass-webgl.png"><meta name="twitter:image:alt" content="Liquid glass over coral and blue layers, from Felipe de Soto&#39;s WebGL tutorial">
 
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Blog","name":"Engineering notes","url":"https://felipedesoto.com/blog/","author":{"@type":"Person","name":"Felipe de Soto","url":"https://felipedesoto.com/"}}</script>
-<link rel="icon" type="image/svg+xml" href="../favicon.svg"><link rel="preload" href="../assets/YIPMono-Regular-CXokgM-x.woff2" as="font" type="font/woff2" crossorigin>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Blog","name":"Web development notes","url":"https://felipedesoto.com/blog/","author":{"@type":"Person","name":"Felipe de Soto","url":"https://felipedesoto.com/"}}</script>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg"><link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png"><link rel="preload" href="../assets/YIPMono-Regular-CXokgM-x.woff2" as="font" type="font/woff2" crossorigin>
 <title>Web development and rendering notes — Felipe de Soto</title>
-  <script type="module" crossorigin src="../assets/preload-helper-CvN2ee45.js"></script>
-  <script type="module" crossorigin src="../assets/main-D_VXA4kI.js"></script>
-  <link rel="stylesheet" crossorigin href="../assets/main-Cr-QaFKG.css">
+  <script type="module" crossorigin src="../assets/preload-helper-DhxL1vBh.js"></script>
+  <script type="module" crossorigin src="../assets/main-DFeyn7E1.js"></script>
+  <link rel="stylesheet" crossorigin href="../assets/preload-helper-DiWeSKb-.css">
+  <link rel="stylesheet" crossorigin href="../assets/main-CijlbxXW.css">
 </head>
 <body class="blog-page">
 <a class="skip-link" href="#main">Skip to content</a>
@@ -25,8 +26,17 @@
 <a class="blog-brand" href="../" aria-label="Felipe de Soto, portfolio">f<span>.</span><span class="blog-brand-name">Felipe de Soto</span></a>
 <nav class="blog-nav" aria-label="Blog navigation"><a href="../">Portfolio</a><a href="./" aria-current="page">Blog</a></nav>
 </header>
-<main class="blog-main" id="main" tabindex="-1"><section class="blog-hero"><p class="blog-kicker">The blog</p><h1 class="blog-index-heading">Engineering notes.</h1><p class="blog-description">A closer look at the things I build: the details, the tradeoffs, and the code behind them.</p></section><section class="blog-post-list" aria-label="Posts"><article class="blog-post-card glass"><div class="blog-post-meta"><time datetime="2026-10-05">October 5, 2026</time><span>Felipe de Soto</span></div><h2><a class="blog-post-link" href="posts/glass-effect/">How I built liquid glass with WebGL for my portfolio</a></h2><p class="blog-post-description">How I built Apple-style liquid glass with WebGL: backdrop sampling, edge refraction, flipped reflections, chromatic aberration, and interactive demos.</p><a class="blog-post-read" href="posts/glass-effect/" aria-label="Read How I built liquid glass with WebGL for my portfolio">Read the post <span aria-hidden="true">↗</span></a></article></section></main>
-<footer class="blog-footer"><p>Written by Felipe de Soto. Built as static pages.</p><a href="../">Back to the portfolio</a></footer>
+<main class="blog-main" id="main" tabindex="-1"><section class="blog-hero"><p class="blog-kicker">The blog</p><h1 class="blog-index-heading">Web development notes</h1><p class="blog-description">My web development notes on the shaders, interfaces, and code in my projects.</p></section><section class="blog-post-list" aria-label="Posts"><article class="blog-post-card glass"><div class="blog-post-meta"><time datetime="2026-10-05">October 5, 2026</time><span>Felipe de Soto</span></div><h2><a class="blog-post-link" href="posts/glass-effect/">How I built liquid glass with WebGL for my portfolio</a></h2><p class="blog-post-description">How I built liquid glass for my portfolio with WebGL, rounded refraction, flipped reflections, and chromatic aberration.</p><a class="blog-post-read" href="posts/glass-effect/" aria-label="Read How I built liquid glass with WebGL for my portfolio">Read How I built liquid glass with WebGL for my portfolio <span aria-hidden="true">↗</span></a></article></section></main>
+<aside class="blog-share"><div class="share-tools" data-share-tools data-share-title="Web development and rendering notes" data-share-url="https://felipedesoto.com/blog/" role="group" aria-label="Share these notes">
+<span class="share-caption">Share these notes</span>
+<a class="share-action" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Ffelipedesoto.com%2Fblog%2F" target="_blank" rel="noopener noreferrer">Share on LinkedIn</a>
+<a class="share-action" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Ffelipedesoto.com%2Fblog%2F&amp;text=Web%20development%20and%20rendering%20notes" target="_blank" rel="noopener noreferrer">Post on X</a>
+<a class="share-action" href="mailto:?subject=Web%20development%20and%20rendering%20notes&amp;body=https%3A%2F%2Ffelipedesoto.com%2Fblog%2F">Share by email</a>
+<button class="share-action" type="button" data-share-copy hidden><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V4H4v12h4"/></svg><span data-share-label>Copy link</span></button>
+<button class="share-action" type="button" data-share-native hidden>More sharing options ↗</button>
+<span class="share-status" data-share-status role="status" aria-live="polite" aria-atomic="true"></span>
+</div></aside>
+<footer class="blog-footer"><p>Written by Felipe de Soto.</p><a href="../">Back to the portfolio</a></footer>
 </div>
 </body>
 </html>

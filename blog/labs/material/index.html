@@ -3,19 +3,20 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#101b30"><meta name="description" content="Glass material lab: explore the liquid glass renderer from Felipe de Soto&#39;s portfolio.">
+<meta name="theme-color" content="#101b30"><meta name="description" content="Liquid glass material lab: explore the liquid glass renderer from Felipe de Soto&#39;s portfolio.">
 <meta name="robots" content="noindex, follow">
 <link rel="canonical" href="https://felipedesoto.com/blog/labs/material/">
-<meta property="og:title" content="Glass material lab"><meta property="og:description" content="Glass material lab: explore the liquid glass renderer from Felipe de Soto&#39;s portfolio.">
+<meta property="og:title" content="Liquid glass material lab"><meta property="og:description" content="Liquid glass material lab: explore the liquid glass renderer from Felipe de Soto&#39;s portfolio.">
 <meta property="og:type" content="website"><meta property="og:url" content="https://felipedesoto.com/blog/labs/material/"><meta property="og:site_name" content="Felipe de Soto"><meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://felipedesoto.com/blog-assets/liquid-glass-webgl.png"><meta property="og:image:alt" content="Liquid glass over coral and blue layers, from Felipe de Soto&#39;s WebGL tutorial"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
-<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Glass material lab"><meta name="twitter:description" content="Glass material lab: explore the liquid glass renderer from Felipe de Soto&#39;s portfolio."><meta name="twitter:image" content="https://felipedesoto.com/blog-assets/liquid-glass-webgl.png"><meta name="twitter:image:alt" content="Liquid glass over coral and blue layers, from Felipe de Soto&#39;s WebGL tutorial">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Liquid glass material lab"><meta name="twitter:description" content="Liquid glass material lab: explore the liquid glass renderer from Felipe de Soto&#39;s portfolio."><meta name="twitter:image" content="https://felipedesoto.com/blog-assets/liquid-glass-webgl.png"><meta name="twitter:image:alt" content="Liquid glass over coral and blue layers, from Felipe de Soto&#39;s WebGL tutorial">
 
-<link rel="icon" type="image/svg+xml" href="../../../favicon.svg"><link rel="preload" href="../../../assets/YIPMono-Regular-CXokgM-x.woff2" as="font" type="font/woff2" crossorigin>
-<title>Glass material lab — Felipe de Soto</title>
-  <script type="module" crossorigin src="../../../assets/preload-helper-CvN2ee45.js"></script>
-  <script type="module" crossorigin src="../../../assets/main-D_VXA4kI.js"></script>
-  <link rel="stylesheet" crossorigin href="../../../assets/main-Cr-QaFKG.css">
+<link rel="icon" type="image/svg+xml" href="../../../favicon.svg"><link rel="apple-touch-icon" sizes="180x180" href="../../../apple-touch-icon.png"><link rel="preload" href="../../../assets/YIPMono-Regular-CXokgM-x.woff2" as="font" type="font/woff2" crossorigin>
+<title>Liquid glass material lab — Felipe de Soto</title>
+  <script type="module" crossorigin src="../../../assets/preload-helper-DhxL1vBh.js"></script>
+  <script type="module" crossorigin src="../../../assets/main-DFeyn7E1.js"></script>
+  <link rel="stylesheet" crossorigin href="../../../assets/preload-helper-DiWeSKb-.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/main-CijlbxXW.css">
 </head>
 <body class="blog-page blog-lab-page">
 <a class="skip-link" href="#main">Skip to content</a>
@@ -24,14 +25,15 @@
 <a class="blog-brand" href="../../../" aria-label="Felipe de Soto, portfolio">f<span>.</span><span class="blog-brand-name">Felipe de Soto</span></a>
 <nav class="blog-nav" aria-label="Blog navigation"><a href="../../../">Portfolio</a><a href="../../">Blog</a></nav>
 </header>
-<main class="blog-main" id="main" tabindex="-1"><h1 class="blog-lab-heading">Glass material lab</h1><section class="glass-demo is-expanded is-standalone" data-glass-demo="material" data-lab-standalone data-lab-href="./" data-article-href="../../posts/glass-effect/#lab-material" aria-label="Glass material lab"><div data-demo-placeholder>
-<div class="glass-demo-toolbar"><h3 class="glass-demo-title">Glass material lab</h3><div class="glass-demo-tools"><a class="glass-demo-back" href="../../posts/glass-effect/#lab-material">← Back to article</a><button type="button" disabled>Show magnifier</button><a class="glass-demo-back" href="./">Open lab ↗</a></div></div>
+<main class="blog-main" id="main" tabindex="-1"><h1 class="blog-lab-heading">Liquid glass material lab</h1><section class="glass-demo is-expanded is-standalone" data-glass-demo="material" data-lab-standalone data-lab-href="./" data-article-href="../../posts/glass-effect/#lab-material" aria-label="Liquid glass material lab"><div data-demo-placeholder>
+<div class="glass-demo-toolbar"><h3 class="glass-demo-title">Material controls</h3><div class="glass-demo-tools"><a class="glass-demo-back" href="../../posts/glass-effect/#lab-material">← Back to article</a><button type="button" disabled>Show magnifier</button><a class="glass-demo-back" href="./">Open material lab ↗</a></div></div>
 <div class="glass-demo-workspace"><div class="glass-demo-stage glass-demo-preview" role="img" aria-label="Static preview of a glass pane over a blue and coral backdrop"><span class="glass-demo-preview-text">LIGHT<br>THROUGH<br>LAYERS</span><span class="glass-demo-preview-pane" aria-hidden="true"></span></div></div>
-<p class="glass-demo-drag-hint">Drag the pane. Arrow keys move the focused pane; Shift moves faster, Home resets it.</p><p class="glass-demo-caption">The pane uses the site's real WebGL shader. This controlled canvas backdrop replaces DOM capture for the demo. The label above it remains live HTML.</p>
+<p class="glass-demo-drag-hint">Drag the pane. Arrow keys move the focused pane; Shift moves faster, Home resets it.</p><p class="glass-demo-caption">This liquid glass material lab uses the site's real WebGL shader. Its canvas backdrop replaces DOM capture. The label above it stays live HTML.</p>
 <div class="glass-demo-controls"><label class="glass-demo-control"><span class="glass-demo-control-heading"><span>Border radius</span><output>48 px</output></span><input disabled type="range" value="48" min="0" max="200" step="1"></label><label class="glass-demo-control"><span class="glass-demo-control-heading"><span>Color amount</span><output>18.8%</output></span><input disabled type="range" value="0.188" min="0" max="1" step="0.001"></label><label class="glass-demo-control"><span class="glass-demo-control-heading"><span>Glass color</span><output>#4F4F4F</output></span><input disabled type="color" value="#4f4f4f"></label><label class="glass-demo-control"><span class="glass-demo-control-heading"><span>Blur</span><output>0</output></span><input disabled type="range" value="0" min="0" max="5" step="0.1"></label><label class="glass-demo-control"><span class="glass-demo-control-heading"><span>Distortion</span><output>4</output></span><input disabled type="range" value="4" min="0" max="4" step="0.01"></label><label class="glass-demo-control"><span class="glass-demo-control-heading"><span>Chromatic aberration</span><output>0.4</output></span><input disabled type="range" value="0.4" min="0" max="1" step="0.01"></label><label class="glass-demo-control"><span class="glass-demo-control-heading"><span>Z-axis radius</span><output>60 px</output></span><input disabled type="range" value="60" min="0" max="60" step="1"></label><details class="glass-demo-advanced" inert><summary>Advanced material settings</summary></details><label class="glass-demo-toggle"><input disabled type="checkbox" checked><span>Glass surface</span></label><label class="glass-demo-toggle"><input disabled type="checkbox" checked><span>Captured text in the backdrop</span></label></div><div class="glass-demo-actions"><button disabled type="button">Reset demo</button></div>
 <p class="glass-demo-summary">Local material: 18.8% color, distortion 4, chromatic aberration 0.4, rim softness 6 px.</p>
 <p class="glass-demo-status" data-demo-load-status role="status" aria-live="polite" aria-atomic="true">Interactive WebGL lab loads when nearby. Enable JavaScript to change these settings.</p></div></section></main>
-<footer class="blog-footer"><p>Written by Felipe de Soto. Built as static pages.</p><a href="../../../">Back to the portfolio</a></footer>
+
+<footer class="blog-footer"><p>Written by Felipe de Soto.</p><a href="../../../">Back to the portfolio</a></footer>
 </div>
 </body>
 </html>
