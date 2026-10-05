@@ -33,6 +33,13 @@ vec2 liquidReflectionProfile(float inside, float width, float thickness, float p
   // inside, reversing only the normal axis while preserving the tangent.
   return vec2(2.0 * inside + reach, liquidEdgeMask(inside, band));
 }
+
+// Rougher at the outer rim, fading to zero at the flat face. Bound the
+// footprint to both the bevel and the captured backdrop's safe margin.
+float liquidReflectionBlurRadius(float edgeBlend, float radius, float width, float padding) {
+  float limit = min(max(width, 0.0) * 0.5, max(padding, 0.0) * 0.1);
+  return min(max(radius, 0.0), limit) * clamp(edgeBlend, 0.0, 1.0);
+}
 `,t=`
 fn liquidReflectionProfile(inside: f32, width: f32, thickness: f32, padding: f32) -> vec2f {
   let band = min(width, min(thickness, padding * 0.3));
@@ -41,5 +48,10 @@ fn liquidReflectionProfile(inside: f32, width: f32, thickness: f32, padding: f32
   let t = clamp(inside / band, 0.0, 1.0);
   let eased = t * t * t * (t * (t * 6.0 - 15.0) + 10.0);
   return vec2f(2.0 * inside + reach, clamp(1.0 - eased, 0.0, 1.0));
+}
+
+fn liquidReflectionBlurRadius(edgeBlend: f32, radius: f32, width: f32, padding: f32) -> f32 {
+  let limit = min(max(width, 0.0) * 0.5, max(padding, 0.0) * 0.1);
+  return min(max(radius, 0.0), limit) * clamp(edgeBlend, 0.0, 1.0);
 }
 `;export{t as n,e as t};
