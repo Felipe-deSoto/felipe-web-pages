@@ -15,7 +15,7 @@
 <link rel="icon" type="image/svg+xml" href="../../../favicon.svg"><link rel="apple-touch-icon" sizes="180x180" href="../../../apple-touch-icon.png"><link rel="preload" href="../../../assets/YIPMono-Regular-CXokgM-x.woff2" as="font" type="font/woff2" crossorigin>
 <title>How I built liquid glass with WebGL — Felipe de Soto</title>
   <script type="module" crossorigin src="../../../assets/preload-helper-D-klIVGQ.js"></script>
-  <script type="module" crossorigin src="../../../assets/main-DgisEXMq.js"></script>
+  <script type="module" crossorigin src="../../../assets/main-D69tEAda.js"></script>
   <link rel="stylesheet" crossorigin href="../../../assets/preload-helper-DiWeSKb-.css">
   <link rel="stylesheet" crossorigin href="../../../assets/main-CijlbxXW.css">
 </head>
@@ -28,7 +28,7 @@
 </header>
 <main class="blog-main" id="main" tabindex="-1"><article class="blog-article"><header class="blog-article-header"><p class="blog-kicker"><a href="../../../">Home</a> / <a href="../../">Development notes</a></p><h1>How I built liquid glass with WebGL for my portfolio</h1><p class="blog-description">How I built liquid glass for my portfolio with WebGL, rounded refraction, flipped reflections, and chromatic aberration.</p><p class="blog-byline"><span>By <a href="../../../">Felipe de Soto</a></span><time datetime="2026-10-05">October 5, 2026</time></p></header><div class="blog-reading-layout"><aside class="blog-toc"><nav aria-label="On this page"><h2>On this page</h2><ol><li class="toc-level-2"><a href="#try-the-material-lab">Try the material lab</a></li><li class="toc-level-2"><a href="#the-backdrop-and-live-html">The backdrop and live HTML</a></li><li class="toc-level-2"><a href="#how-a-card-is-rendered">How a card is rendered</a></li><li class="toc-level-2"><a href="#composing-scene-layers">Composing scene layers</a></li><li class="toc-level-2"><a href="#material-settings-and-blur">Material settings and blur</a></li><li class="toc-level-2"><a href="#rounded-edges">Rounded edges</a></li><li class="toc-level-2"><a href="#flipped-reflections-and-rim-softness">Flipped reflections and rim softness</a></li><li class="toc-level-2"><a href="#hover-and-scrolling">Hover and scrolling</a></li><li class="toc-level-2"><a href="#webgl-webgpu-and-fallbacks">WebGL, WebGPU, and fallbacks</a></li><li class="toc-level-2"><a href="#performance">Performance</a></li><li class="toc-level-2"><a href="#implementation-order">Implementation order</a></li><li class="toc-level-2"><a href="#files-and-references">Files and references</a></li></ol></nav></aside><div class="blog-prose"><p>I built the liquid glass on my portfolio with a WebGL shader that bends content at the rounded edges, flips reflections, and adds chromatic aberration. The two labs below let you change the material and inspect how the layers are combined.</p>
 <p>The pipeline is <strong>backdrop → rounded boundary → displaced samples → reflections → live HTML content</strong>. I render the glass beneath ordinary HTML so the card's own text stays sharp, selectable, and accessible.</p>
-<p>I adapted <strong>ybouane/liquidglass</strong>, an MIT-licensed library, for the cards. The landing-page ribbons use VGPU and WebGPU. Both labs use the card renderer, with draggable panes and fullscreen views.</p>
+<p>I adapted <strong>ybouane/liquidglass</strong>, an MIT-licensed library, for the cards. The landing-page orbital artwork uses cached Canvas 2D curves, independently of glass. Both labs use the card renderer, with draggable panes and fullscreen views.</p>
 <p>CSS <code>backdrop-filter</code> handles frost and blur. To bend and flip the image at the edges, the shader reads the backdrop at displaced coordinates. It works from a flat scene image, so this is a screen-space approximation of glass.</p>
 <h2 id="try-the-material-lab">Try the material lab</h2>
 <p>Compare <strong>Chromatic aberration</strong> at zero and 0.4. At 0.4, red and blue fringes appear around the rim. Set <strong>Rim softness</strong> to zero to sharpen those fringes and reflections. The pane's center stays clear.</p>
@@ -52,8 +52,8 @@
 <p>A <code>.glass</code> element becomes a visible lens in six steps:</p>
 <ol>
 <li><strong>Collect surfaces.</strong> <code>src/main.js</code> loads <code>createGlassSurfaces</code> from <code>src/liquid-glass.js</code>, waits for fonts, and creates empty lenses in a shared scene.</li>
-<li><strong>Build the backdrop.</strong> <code>createGlassBackdrop</code> combines the lighting canvas with ordered proxies for cards, text, the header, and the live ribbons.</li>
-<li><strong>Read the material.</strong> <code>createGlassMaterialCache</code> reads root CSS variables shared by cards, navigation, and ribbons. Style and viewport changes invalidate the cache.</li>
+<li><strong>Build the backdrop.</strong> <code>createGlassBackdrop</code> combines the lighting canvas with ordered proxies for cards, text, the header, and the live artwork.</li>
+<li><strong>Read the material.</strong> <code>createGlassMaterialCache</code> reads root CSS variables shared by cards and navigation. Style and viewport changes invalidate the cache.</li>
 <li><strong>Measure the lens.</strong> <code>glassSceneGeometry</code> and <code>glassSurfaceView</code> map its position, dimensions, and hover transform into the scene, including a capture margin for edge samples.</li>
 <li><strong>Shade the crop.</strong> <code>GlassRenderer</code> uploads the image, applies any blur, then computes refraction, channel separation, reflection, frost, and the surface mask.</li>
 <li><strong>Place it under content.</strong> The result sits in <code>.glass-render-layer</code>, beneath the card's live HTML.</li>
@@ -76,13 +76,13 @@ instance.pause();
 <section class="glass-demo" id="lab-layers" data-glass-demo="layers" data-lab-href="../../labs/layers/" aria-label="Layer composition lab"><div data-demo-placeholder>
 <div class="glass-demo-toolbar"><h3 class="glass-demo-title">Layer controls</h3><div class="glass-demo-tools"><button type="button" data-load-lab>Load interactive lab</button><button type="button" disabled>Show magnifier</button><a class="glass-demo-back" href="../../labs/layers/">Open layer lab ↗</a></div></div>
 <div class="glass-demo-workspace"><div class="glass-demo-stage glass-demo-preview" role="img" aria-label="Static preview of a glass pane over a blue and coral backdrop"><span class="glass-demo-preview-text">LIGHT<br>THROUGH<br>LAYERS</span><span class="glass-demo-preview-pane" aria-hidden="true"></span></div></div>
-<p class="glass-demo-drag-hint">Drag either pane. Arrow keys move the focused pane; Shift moves faster, Home resets it.</p><p class="glass-demo-caption">This glass layer composition lab draws text once into a canvas. Each pane samples the layers below it with the site's WebGL renderer. The hero ribbons have their own ordering.</p>
+<p class="glass-demo-drag-hint">Drag either pane. Arrow keys move the focused pane; Shift moves faster, Home resets it.</p><p class="glass-demo-caption">This glass layer composition lab draws text once into a canvas. Each pane samples the layers below it with the site's WebGL renderer. The hero artwork contributes one completed canvas layer.</p>
 <div class="glass-demo-controls"><label class="glass-demo-toggle"><input disabled type="checkbox" checked><span>Background lighting and tiles</span></label><label class="glass-demo-toggle"><input disabled type="checkbox" checked><span>Sampled text</span></label><label class="glass-demo-toggle"><input disabled type="checkbox" checked><span>Rear glass pane</span></label><label class="glass-demo-toggle"><input disabled type="checkbox" checked><span>Front glass pane</span></label><label class="glass-demo-control"><span class="glass-demo-control-heading"><span>Border radius</span><output>48 px</output></span><input disabled type="range" value="48" min="0" max="200" step="1"></label></div><div class="glass-demo-actions"><button disabled type="button">Show all layers</button><button disabled type="button">Reset demo</button></div>
 <p class="glass-demo-summary">Visible layers: background lighting and tiles, sampled text, rear glass pane, front glass pane. The HTML label is always separate.</p>
 <p class="glass-demo-status" data-demo-load-status role="status" aria-live="polite" aria-atomic="true">Interactive WebGL lab loads when nearby. Enable JavaScript to change these settings.</p></div></section>
 <p>The lab uses canvas text in place of cached foreground images. This keeps the paint-order demo separate from DOM capture and the portfolio's hover transforms.</p>
 <p>On the portfolio, <code>compareBackdropLayers</code> orders page content, the fixed header, the draggable lens, and controls. DOM order breaks ties, and parents paint before nested glass. The clear navigation pill can therefore sample both its bar and labels.</p>
-<p>The <strong>three procedural ribbons</strong> are drawn back to front in WGSL by <code>src/shader.js</code>. Their completed canvas becomes a single foreground source for later lenses. The layer lab's switches control the scene sources; ribbon ordering is handled separately.</p>
+<p>The hero artwork is drawn from three cached, illuminated curves by <code>src/hero-artwork.js</code>. Its completed canvas becomes a single foreground source for later lenses. It does not sample or refract the backdrop.</p>
 <span class="blog-section-alias" id="one-material-two-kinds-of-blur" aria-hidden="true"></span><h2 id="material-settings-and-blur">Material settings and blur</h2>
 <p><code>src/glass-settings.js</code> normalizes these shared settings. Each demo uses the same mappings with its own local values.</p>
 <table>
@@ -217,17 +217,16 @@ return vec2(2.0 * inside + reach, liquidEdgeMask(inside, band));
 <p>Reflections use the same transform. Nested lenses sample their parent's projected canvas without applying that transform twice. <code>src/glass-backdrop-projection.js</code> maps cached foreground and glass images into another lens's backdrop.</p>
 <p>The scene is attached to the document, so page cards and their sampled coordinates scroll together. Fixed navigation updates its scene position as content passes beneath it. Foreground images are recaptured when their content or size changes; scrolling reuses the cache. Captures embed the same fonts as the live page to preserve glyph shapes and wrapping.</p>
 <span class="blog-section-alias" id="webgl-cards-webgpu-ribbons-useful-fallbacks" aria-hidden="true"></span><h2 id="webgl-webgpu-and-fallbacks">WebGL, WebGPU, and fallbacks</h2>
-<p>Cards, navigation, badges, the draggable lens, and both labs use the adapted <strong>WebGL</strong> renderer. The ribbons use <strong>VGPU</strong>, <strong>WebGPU</strong>, and WGSL in <code>src/shader.js</code>.</p>
-<p>Both paths share the backdrop and material settings. The ribbons use a procedural boundary with a quartic bevel and the shared reflection profile, but derive their own bounded thickness and refraction offset rather than using the card shader's GLSL <code>refract</code> and refractive-index control.</p>
-<p>Ribbon samples offset red and blue in opposite directions while green stays centered. A combined kernel handles surface blur and rim softness; zero distortion also disables the chromatic split. Ribbons draw back to front and cycle through the site's palette.</p>
-<p>The ribbon renderer starts only on screens at least 781px wide with GPU support. Mobile hides the artwork; desktop setup failures leave static CSS artwork. Failed WebGL initialization leaves native frosted glass. Static text, links, and CV content remain readable without either GPU path or JavaScript.</p>
+<p>Cards, navigation, badges, the draggable lens, and both labs use the adapted <strong>WebGL</strong> renderer. The hero previously used WebGPU ribbons; it now uses a Canvas 2D sculpture to reduce rendering work.</p>
+<p>Glass surfaces share the backdrop and material settings. The decorative artwork contributes its finished image to the scene but has no glass material.</p>
+<p>The artwork starts only on screens at least 781px wide. Mobile hides it; Canvas setup failures leave static CSS artwork. Failed WebGL initialization leaves native frosted glass. Static text, links, and CV content remain readable without JavaScript.</p>
 <span class="blog-section-alias" id="what-the-effect-costs" aria-hidden="true"></span><h2 id="performance">Performance</h2>
 <p>Creating and uploading scene images costs CPU time and memory; the shader's texture samples cost GPU time. I use these limits:</p>
 <ul>
 <li><strong>Cache captures.</strong> Foreground images use limited capture concurrency and refresh only affected content. Scrolling repositions the cache.</li>
 <li><strong>Skip unused blur passes.</strong> At zero surface blur, both samplers use the sharp texture. Positive blur adds horizontal/vertical passes; rim softness adds taps only in its band.</li>
 <li><strong>Cap resolution and motion.</strong> Cards use at most one pixel per CSS pixel; live HTML retains native resolution. Ribbons use at most 1.5 device pixel ratio and 30 FPS. Background pixels paint at up to 12 FPS.</li>
-<li><strong>Schedule updates.</strong> Geometry and scene changes are batched. Scroll and drag can flush immediately. Hidden pages cancel pending work; ribbons also pause outside the viewport.</li>
+<li><strong>Schedule updates.</strong> Geometry and scene changes are batched. Scroll and drag can flush immediately. Hidden pages cancel pending work; artwork also pauses outside the viewport.</li>
 <li><strong>Respect reduced motion.</strong> The CV's motion switch and system preference stop animation. Labs start still and redraw for controls and layout changes, with no idle loop.</li>
 </ul>
 <p>During WebGL context loss, the renderer skips draws. Restoration rebuilds GPU resources; the next requested render can upload images again. Live HTML stays available. Production restoration is separate from the initialization fallback; the labs explicitly report a fallback if their GPU path becomes unavailable.</p>
@@ -256,7 +255,7 @@ return vec2(2.0 * inside + reach, liquidEdgeMask(inside, band));
 <tbody>
 <tr>
 <td><code>src/main.js</code></td>
-<td>Startup, motion preference, ribbon lifecycle.</td>
+<td>Startup, motion preference, artwork lifecycle.</td>
 </tr>
 <tr>
 <td><code>src/liquid-glass.js</code></td>
@@ -287,8 +286,8 @@ return vec2(2.0 * inside + reach, liquidEdgeMask(inside, band));
 <td>Foreground and nested-glass sampling.</td>
 </tr>
 <tr>
-<td><code>src/shader.js</code></td>
-<td>VGPU/WGSL ribbon effect.</td>
+<td><code>src/hero-artwork.js</code></td>
+<td>Cached Canvas 2D orbital artwork.</td>
 </tr>
 <tr>
 <td><code>src/blog/demos.js</code></td>
